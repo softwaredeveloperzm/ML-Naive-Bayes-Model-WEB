@@ -1,0 +1,100 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container" style="margin-top: 100px;">
+    <h3 class="text-center">Text Classification Model Setup</h3>
+    <p class="text-muted text-center">Using Django, Scikit-Learn, and Naive Bayes</p>
+
+    <div class="card my-4">
+        <div class="card-header bg-primary text-white">
+            1. Import Necessary Libraries and Models
+        </div>
+        <div class="card-body">
+            <p>We begin by importing Django functions <code>render</code> and <code>redirect</code> for rendering views and redirecting requests. Scikit-learn modules <code>fetch_20newsgroups</code> and <code>MultinomialNB</code> are used for data fetching and model creation.</p>
+            <pre><code>from django.shortcuts import render, redirect
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            2. Define Categories and Mapping for Classification
+        </div>
+        <div class="card-body">
+            <p>We define specific categories for news groups and create a mapping for grouping similar categories under broader labels.</p>
+            <pre><code>categories = [
+    'alt.atheism', 'comp.graphics', 'sci.space', ...
+]
+category_mapping = {
+    'alt.atheism': 'Atheism',
+    'soc.religion.christian': 'Christianity',
+    'comp.graphics': 'Graphics',
+    ...
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            3. Fetch Training Data
+        </div>
+        <div class="card-body">
+            <p>We use <code>fetch_20newsgroups</code> to get the training data for the defined categories.</p>
+            <pre><code>train = fetch_20newsgroups(subset='train', categories=categories)</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            4. Build and Train the Model
+        </div>
+        <div class="card-body">
+            <p>A pipeline is created with <code>TfidfVectorizer</code> and <code>MultinomialNB</code> to preprocess the text data and train the Naive Bayes model.</p>
+            <pre><code>model = make_pipeline(TfidfVectorizer(), MultinomialNB())
+model.fit(train.data, train.target)</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            5. Define Prediction Function
+        </div>
+        <div class="card-body">
+            <p>A <code>predict_category</code> function is defined to predict the category of a given text input, using the trained model and the category mapping.</p>
+            <pre><code>def predict_category(text):
+    pred = model.predict([text])[0]
+    raw_category = train.target_names[pred]
+    return category_mapping.get(raw_category, raw_category)</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            6. Handle User Input and Save Prediction
+        </div>
+        <div class="card-body">
+            <p>In the <code>home</code> view, we take the user’s input text, predict its category, and save it as a new <code>Post</code> object.</p>
+            <pre><code>text = request.POST.get('text')
+predicted_category = predict_category(text)
+create_post = Post.objects.create(title=text, category=predicted_category)</code></pre>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header bg-primary text-white">
+            7. Display Categories and Posts
+        </div>
+        <div class="card-body">
+            <p>Finally, in the <code>news</code> and <code>category</code> views, we display the categories and posts. Each category is a collection of posts with that predicted category.</p>
+            <pre><code>def news(request):
+    categories = {post.category for post in Post.objects.all()}
+    return render(request, 'app/news.html', {'categories': categories})</code></pre>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

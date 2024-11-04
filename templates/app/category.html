@@ -1,0 +1,42 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <!-- Category Title -->
+                    <div class="text-md-start">
+                        <h4 class="text-primary fw-bold">{{ category }}</h4>
+                        <hr class="bg-primary">
+                    </div>
+
+                    <!-- Posts List -->
+                    {% for post in posts %}
+                    <div class="text-md-start mb-4 pb-3 border-bottom">
+                        <!-- Post Title -->
+                        <h5 class="fw-semibold">{{ post.title }}</h5>
+                        
+                        <!-- Post Author and Date -->
+                        <div class="d-flex align-items-center text-muted mb-2">
+                            <h6 class="mb-0">Tim</h6> <!-- Replace with actual author if available -->
+                            <span class="mx-2">•</span>
+                            <h6 class="mb-0">20 October 2024</h6> <!-- Replace with actual date if available -->
+                        </div>
+                        
+                        <!-- Post Description or Body (instead of Content) -->
+                        <p class="text-secondary">{{ post.title |truncatewords:30 }}</p>
+                        
+                        <!-- Read More Link -->
+                        <a href="" class="text-decoration-none text-primary">
+                            Read More &rarr;
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

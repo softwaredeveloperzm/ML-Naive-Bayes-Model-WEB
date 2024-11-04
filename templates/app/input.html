@@ -1,0 +1,59 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+
+     <div class="container my-5 py-5">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card bg-light">
+
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            <input class="form-control" name="text" type="text" placeholder="Enter The Post">
+
+                            <button type="submit" class="btn btn-primary my-5"> Submit </button>
+
+                            <h6> Create posts based on anything then the model will put it the well suited category <h6>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock content %}
+
+
+     <div class="container my-5 py-5">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card bg-light">
+
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            <input class="form-control" name="text" type="text" placeholder="Enter The Post">
+
+                            <button type="submit" class="btn btn-primary my-5"> Submit </button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+

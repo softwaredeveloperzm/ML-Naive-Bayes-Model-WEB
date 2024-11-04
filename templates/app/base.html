@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+<section>
+    <nav class="navbar navbar-expand-md bg-light navbar-light fixed-top shadow-sm">
+        <div class="container-xl d-flex justify-content-between align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+               
+                <span class="fw-bold text-dark ms-2">Naive Bayes Model</span> <!-- You can replace "BrandName" with your brand or site name -->
+            </a>
+           
+            <div class="d-flex align-items-center">
+                <div>
+                    <a href=" {% url "home" %}" class="btn btn-primary btn-sm m-1">Create</a>
+                    <a href=" {% url "setup" %}" class="btn btn-primary btn-sm m-1">Model SetUp</a>
+                </div>
+
+               
+            </div>
+        </div>
+    </nav>
+</section>
+    
+    {% block content %}
+    
+    {% endblock content %}
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
